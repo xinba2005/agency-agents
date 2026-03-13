@@ -1,37 +1,37 @@
-# Cursor Integration
+﻿# Cursor 集成
 
-Converts all 61 Agency agents into Cursor `.mdc` rule files. Rules are
-**project-scoped** — install them from your project root.
+把 61 个 Agency 智能体转换为 Cursor `.mdc` 规则文件。
+规则是**项目级**的，请在目标项目根目录安装。
 
-## Install
+## 安装
 
 ```bash
-# Run from your project root
+# 在你的项目根目录执行
 cd /your/project
 /path/to/agency-agents/scripts/install.sh --tool cursor
 ```
 
-This creates `.cursor/rules/<agent-slug>.mdc` files in your project.
+该命令会在项目中生成 `.cursor/rules/<agent-slug>.mdc`。
 
-## Activate a Rule
+## 激活规则
 
-In Cursor, reference an agent in your prompt:
+在 Cursor 提示词中引用智能体：
 
 ```
-@frontend-developer Review this React component for performance issues.
+@frontend-developer 审查这个 React 组件的性能问题。
 ```
 
-Or enable a rule as always-on by editing its frontmatter:
+也可编辑 frontmatter，让规则始终生效：
 
 ```yaml
 ---
-description: Expert frontend developer...
+description: 专业前端开发智能体...
 globs: "**/*.tsx,**/*.ts"
 alwaysApply: true
 ---
 ```
 
-## Regenerate
+## 重新生成
 
 ```bash
 ./scripts/convert.sh --tool cursor

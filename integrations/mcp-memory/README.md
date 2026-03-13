@@ -1,18 +1,20 @@
-# MCP Memory Integration
+﻿# MCP Memory 集成
 
-> Give any agent persistent memory across sessions using the Model Context Protocol (MCP).
+> 通过 Model Context Protocol（MCP）为任意智能体提供跨会话持久记忆。
 
-## What It Does
+## 作用
 
-By default, agents in The Agency start every session from scratch. Context is passed manually via copy-paste between agents and sessions. An MCP memory server changes that:
+默认情况下，The Agency 的智能体每次会话都从零开始，需要手动在会话或智能体间复制上下文。
+接入 MCP 记忆服务后可以实现：
 
-- **Cross-session memory**: An agent remembers decisions, deliverables, and context from previous sessions
-- **Handoff continuity**: When one agent hands off to another, the receiving agent can recall exactly what was done — no copy-paste required
-- **Rollback on failure**: When a QA check fails or an architecture decision turns out wrong, roll back to a known-good state instead of starting over
+- **跨会话记忆**：记住历史决策、交付物与上下文
+- **交接连续性**：一个智能体交接给另一个时，可直接回忆先前工作
+- **失败回滚**：当 QA 失败或架构方向错误时，回退到已知正确状态
 
-## Setup
+## 配置
 
-You need an MCP server that provides memory tools: `remember`, `recall`, `rollback`, and `search`. Add it to your MCP client config (Claude Code, Cursor, etc.):
+你需要一个提供 `remember`、`recall`、`rollback`、`search` 工具的 MCP 服务。
+在 MCP 客户端（Claude Code、Cursor 等）中配置：
 
 ```json
 {
@@ -25,13 +27,13 @@ You need an MCP server that provides memory tools: `remember`, `recall`, `rollba
 }
 ```
 
-Any MCP server that exposes `remember`, `recall`, `rollback`, and `search` tools will work. Check the [MCP ecosystem](https://modelcontextprotocol.io) for available implementations.
+任何暴露上述 4 个工具的 MCP 服务都可使用。可参考 [MCP 生态](https://modelcontextprotocol.io)。
 
-## How to Add Memory to Any Agent
+## 如何给任意智能体加入记忆能力
 
-To enhance an existing agent with persistent memory, add a **Memory Integration** section to the agent's prompt. This section instructs the agent to use MCP memory tools at key moments.
+在智能体提示词中增加一个 **Memory Integration** 章节，指导其在关键时刻使用记忆工具。
 
-### The Pattern
+### 推荐模式
 
 ```markdown
 ## Memory Integration
@@ -42,7 +44,7 @@ When you start a session:
 
 When you make key decisions or complete deliverables:
 - Remember the decision or deliverable with descriptive tags (your agent name, the project, the topic)
-- Include enough context that a future session — or a different agent — can understand what was done and why
+- Include enough context that a future session  or a different agent  can understand what was done and why
 
 When handing off to another agent:
 - Remember your deliverables tagged for the receiving agent
@@ -53,27 +55,27 @@ When something fails and you need to recover:
 - Use rollback to restore to that point rather than rebuilding from scratch
 ```
 
-### What the Agent Does With This
+### 这会带来什么
 
-The LLM will use MCP memory tools automatically when given these instructions:
+给出以上指引后，LLM 会在流程中自动使用 MCP 工具：
 
-- `remember` — store a decision, deliverable, or context snapshot with tags
-- `recall` — search for relevant memories by keyword, tag, or semantic similarity
-- `rollback` — revert to a previous state when something goes wrong
-- `search` — find specific memories across sessions and agents
+- `remember`：保存决策、交付物或上下文快照
+- `recall`：按关键词、标签、语义召回历史记忆
+- `rollback`：出现问题时回退到历史状态
+- `search`：跨会话、跨智能体检索指定信息
 
-No code changes to the agent files. No API calls to write. The MCP tools handle everything.
+无需改智能体代码，也不需要手写 API 调用。
 
-## Example: Enhancing the Backend Architect
+## 示例：增强 Backend Architect
 
-See [backend-architect-with-memory.md](backend-architect-with-memory.md) for a complete example — the standard Backend Architect agent with a Memory Integration section added.
+完整示例见 [backend-architect-with-memory.md](backend-architect-with-memory.md)。
 
-## Example: Memory-Powered Workflow
+## 示例：记忆驱动工作流
 
-See [../../examples/workflow-with-memory.md](../../examples/workflow-with-memory.md) for the Startup MVP workflow enhanced with persistent memory, showing how agents pass context through memory instead of copy-paste.
+见 [../../examples/workflow-with-memory.md](../../examples/workflow-with-memory.md)，展示如何用记忆替代人工复制粘贴进行跨智能体上下文传递。
 
-## Tips
+## 建议
 
-- **Tag consistently**: Use the agent name and project name as tags on every memory. This makes recall reliable.
-- **Let the LLM decide what's important**: The memory instructions are guidance, not rigid rules. The LLM will figure out when to remember and what to recall.
-- **Rollback is the killer feature**: When a Reality Checker fails a deliverable, the original agent can roll back to its last checkpoint instead of trying to manually undo changes.
+- **统一标签**：每条记忆都加上智能体名和项目名
+- **让模型判断关键点**：规则是指导，不必僵化执行
+- **优先使用回滚**：当质量检查失败时，优先回到最近稳定检查点

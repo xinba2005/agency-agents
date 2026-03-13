@@ -1,27 +1,27 @@
-# Gemini CLI Integration
+﻿# Gemini CLI 集成
 
-Packages all 61 Agency agents as a Gemini CLI extension. The extension
-installs to `~/.gemini/extensions/agency-agents/`.
+将 61 个 Agency 智能体打包为 Gemini CLI 扩展。
+扩展安装路径：`~/.gemini/extensions/agency-agents/`。
 
-## Install
+## 安装
 
 ```bash
-# Generate the Gemini CLI integration files first
+# 先生成 Gemini CLI 集成文件
 ./scripts/convert.sh --tool gemini-cli
 
-# Then install the extension
+# 再安装扩展
 ./scripts/install.sh --tool gemini-cli
 ```
 
-## Activate a Skill
+## 激活技能
 
-In Gemini CLI, reference an agent by name:
+在 Gemini CLI 中按名称引用智能体：
 
 ```
-Use the frontend-developer skill to help me build this UI.
+使用 frontend-developer 技能帮我实现这个 UI。
 ```
 
-## Extension Structure
+## 扩展结构
 
 ```
 ~/.gemini/extensions/agency-agents/
@@ -33,7 +33,7 @@ Use the frontend-developer skill to help me build this UI.
     ...
 ```
 
-## Regenerate
+## 重新生成
 
 ```bash
 ./scripts/convert.sh --tool gemini-cli

@@ -1,37 +1,37 @@
-# Aider Integration
+﻿# Aider 集成
 
-All 61 Agency agents are consolidated into a single `CONVENTIONS.md` file.
-Aider reads this file automatically when it's present in your project root.
+所有 61 个 Agency 智能体会被合并为一个 `CONVENTIONS.md` 文件。
+当该文件位于项目根目录时，Aider 会自动读取。
 
-## Install
+## 安装
 
 ```bash
-# Run from your project root
+# 在你的项目根目录执行
 cd /your/project
 /path/to/agency-agents/scripts/install.sh --tool aider
 ```
 
-## Activate an Agent
+## 激活智能体
 
-In your Aider session, reference the agent by name:
-
-```
-Use the Frontend Developer agent to refactor this component.
-```
+在 Aider 会话中，直接按名称引用智能体：
 
 ```
-Apply the Reality Checker agent to verify this is production-ready.
+使用 Frontend Developer 智能体重构这个组件。
 ```
 
-## Manual Usage
+```
+使用 Reality Checker 智能体验证这个功能是否可用于生产。
+```
 
-You can also pass the conventions file directly:
+## 手动使用
+
+你也可以显式传入约定文件：
 
 ```bash
 aider --read CONVENTIONS.md
 ```
 
-## Regenerate
+## 重新生成
 
 ```bash
 ./scripts/convert.sh --tool aider

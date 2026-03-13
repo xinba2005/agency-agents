@@ -1,61 +1,58 @@
-# OpenCode Integration
+﻿# OpenCode 集成
 
-OpenCode agents are `.md` files with YAML frontmatter stored in
-`.opencode/agents/`. The converter maps named colors to hex codes and adds
-`mode: subagent` so agents are invoked on-demand via `@agent-name` rather
-than cluttering the primary agent picker.
+OpenCode 智能体是带 YAML frontmatter 的 `.md` 文件，存放在 `.opencode/agents/`。
+转换器会把命名颜色转为十六进制颜色，并添加 `mode: subagent`，让智能体通过 `@agent-name` 按需调用。
 
-## Install
+## 安装
 
 ```bash
-# Run from your project root
+# 在你的项目根目录执行
 cd /your/project
 /path/to/agency-agents/scripts/install.sh --tool opencode
 ```
 
-This creates `.opencode/agents/<slug>.md` files in your project directory.
+该命令会在项目目录创建 `.opencode/agents/<slug>.md`。
 
-## Activate an Agent
+## 激活智能体
 
-In OpenCode, invoke a subagent with the `@` prefix:
-
-```
-@frontend-developer help build this component.
-```
+在 OpenCode 中，用 `@` 前缀调用子智能体：
 
 ```
-@reality-checker review this PR.
+@frontend-developer 帮我实现这个组件。
 ```
 
-You can also select agents from the OpenCode UI's agent picker.
+```
+@reality-checker 审查这个 PR。
+```
 
-## Agent Format
+你也可以在 OpenCode 的智能体选择器中手动选择。
 
-Each generated agent file contains:
+## 智能体文件格式
+
+生成文件示例：
 
 ```yaml
 ---
 name: Frontend Developer
-description: Expert frontend developer specializing in modern web technologies...
+description: 专业前端开发智能体，擅长现代 Web 技术...
 mode: subagent
 color: "#00FFFF"
 ---
 ```
 
-- **mode: subagent** — agent is available on-demand, not shown in the primary Tab-cycle list
-- **color** — hex code (named colors from source files are converted automatically)
+- **mode: subagent**：按需调用，不占用主代理轮询列表
+- **color**：十六进制颜色值（源文件命名颜色会自动转换）
 
-## Project vs Global
+## 项目级与全局安装
 
-Agents in `.opencode/agents/` are **project-scoped**. To make them available
-globally across all projects, copy them to your OpenCode config directory:
+`.opencode/agents/` 为**项目级**。若要全局可用，请复制到 OpenCode 配置目录：
 
 ```bash
 mkdir -p ~/.config/opencode/agents
 cp integrations/opencode/agents/*.md ~/.config/opencode/agents/
 ```
 
-## Regenerate
+## 重新生成
 
 ```bash
 ./scripts/convert.sh --tool opencode
